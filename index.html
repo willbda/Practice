@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Practice Lab</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .console-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .console-output, .challenge-info {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 400px;
+            overflow-y: auto;
+        }
+        
+        .console-output h3, .challenge-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .console-line {
+            margin: 5px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .console-log {
+            color: #333;
+        }
+        
+        .console-error {
+            color: #dc3545;
+        }
+        
+        .console-success {
+            color: #28a745;
+        }
+        
+        .challenge-description {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        
+        .clear-console {
+            background-color: #dc3545;
+            margin-left: auto;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-pending { background-color: #ffc107; }
+        .status-success { background-color: #28a745; }
+        .status-error { background-color: #dc3545; }
+        
+        @media (max-width: 768px) {
+            .console-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 JavaScript Practice Lab</h1>
+        <p>Build your skills one challenge at a time!</p>
+    </div>
+    
+    <div class="controls">
+        <button onclick="loadChallenge('challenge-01-variables')">Challenge 1: Variables</button>
+        <button onclick="loadChallenge('challenge-02-functions')">Challenge 2: Functions</button>
+        <button onclick="loadChallenge('challenge-03-arrays')">Challenge 3: Arrays</button>
+        <button onclick="loadChallenge('challenge-04-objects')">Challenge 4: Objects</button>
+        <button onclick="loadChallenge('challenge-05-loops')">Challenge 5: Loops</button>
+        <button onclick="loadChallenge('challenge-06-advanced')">Challenge 6: Advanced</button>
+        <button onclick="loadChallenge('challenge-07-obsidian-generator')">Challenge 7: Obsidian Generator</button>
+        <button class="clear-console" onclick="clearConsole()">Clear Console</button>
+    </div>
+    
+    <div class="console-container">
+        <div class="console-output">
+            <h3>📝 Console Output</h3>
+            <div id="console-content">
+                <div class="console-line console-log">Welcome to your JavaScript Practice Lab!</div>
+                <div class="console-line console-log">Select a challenge to get started.</div>
+            </div>
+        </div>
+        
+        <div class="challenge-info">
+            <h3>📋 Current Challenge</h3>
+            <div id="challenge-content">
+                <div class="challenge-description">
+                    <h4>Getting Started</h4>
+                    <p>Click on any challenge button to load a practice exercise. Each challenge will:</p>
+                    <ul>
+                        <li>Show you what to implement</li>
+                        <li>Provide helpful hints and guidance</li>
+                        <li>Test your solution automatically</li>
+                        <li>Give you feedback on your progress</li>
+                    </ul>
+                    <p><strong>Remember:</strong> The goal is learning, not just completion. Take time to understand each concept!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced console functionality
+        let consoleElement = document.getElementById('console-content');
+        let currentChallenge = null;
+        let challengeStatus = {};
+        
+        // Override console methods to capture output
+        const originalConsole = {
+            log: console.log,
+            error: console.error,
+            warn: console.warn
+        };
+        
+        function addToConsole(message, type = 'log') {
+            const line = document.createElement('div');
+            line.className = `console-line console-${type}`;
+            
+            // Add timestamp
+            const timestamp = new Date().toLocaleTimeString();
+            line.innerHTML = `<span style="color: #666; font-size: 12px;">[${timestamp}]</span> ${message}`;
+            
+            consoleElement.appendChild(line);
+            consoleElement.scrollTop = consoleElement.scrollHeight;
+            
+            // Also log to real console
+            originalConsole[type](message);
+        }
+        
+        // Override console methods
+        console.log = function(...args) {
+            addToConsole(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            addToConsole(args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            addToConsole(args.join(' '), 'warn');
+        };
+        
+        function clearConsole() {
+            consoleElement.innerHTML = '<div class="console-line console-log">Console cleared.</div>';
+        }
+        
+        function updateChallengeStatus(challengeId, status) {
+            challengeStatus[challengeId] = status;
+            // You could update button appearance here based on status
+        }
+        
+        function loadChallenge(challengeId) {
+            currentChallenge = challengeId;
+            
+            console.log(`🎯 Loading ${challengeId}...`);
+            
+            // Clear previous challenge
+            const challengeContent = document.getElementById('challenge-content');
+            challengeContent.innerHTML = '<div class="console-line">Loading...</div>';
+            
+            // Load the challenge script
+            const script = document.createElement('script');
+            script.src = `src/${challengeId}.js`;
+            script.onerror = function() {
+                console.error(`❌ Could not load challenge: ${challengeId}.js`);
+                console.log(`💡 Make sure the file exists in the src/ directory`);
+                challengeContent.innerHTML = `
+                    <div class="challenge-description">
+                        <h4>Challenge Not Found</h4>
+                        <p>The file <code>src/${challengeId}.js</code> doesn't exist yet.</p>
+                        <p>This is normal - you'll be creating these files as part of your practice!</p>
+                    </div>
+                `;
+            };
+            script.onload = function() {
+                console.log(`✅ Challenge ${challengeId} loaded successfully!`);
+            };
+            
+            // Remove previous challenge script if it exists
+            const existingScript = document.getElementById('current-challenge-script');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            script.id = 'current-challenge-script';
+            document.head.appendChild(script);
+        }
+        
+        // Utility function for challenges to update their info panel
+        window.updateChallengeInfo = function(title, description, hints = []) {
+            const challengeContent = document.getElementById('challenge-content');
+            let hintsHtml = '';
+            if (hints.length > 0) {
+                hintsHtml = '<h5>💡 Hints:</h5><ul>' + 
+                    hints.map(hint => `<li>${hint}</li>`).join('') + 
+                    '</ul>';
+            }
+            
+            challengeContent.innerHTML = `
+                <div class="challenge-description">
+                    <h4>${title}</h4>
+                    <p>${description}</p>
+                    ${hintsHtml}
+                </div>
+            `;
+        };
+        
+        // Test runner utility
+        window.runTests = function(testName, testFunction) {
+            console.log(`🧪 Running tests for: ${testName}`);
+            try {
+                const result = testFunction();
+                if (result === true) {
+                    console.log(`✅ All tests passed for ${testName}!`);
+                    return true;
+                } else {
+                    console.error(`❌ Tests failed for ${testName}: ${result}`);
+                    return false;
+                }
+            } catch (error) {
+                console.error(`💥 Error running tests for ${testName}: ${error.message}`);
+                return false;
+            }
+        };
+        
+        console.log('🎉 Practice Lab initialized! Select a challenge to begin.');
+    </script>
+</body>
+</html>
