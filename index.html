@@ -123,7 +123,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>🚀 JavaScript Practice Lab</h1>
+        <h1>JavaScript Practice Lab</h1>
         <p>Build your skills one challenge at a time!</p>
     </div>
     
@@ -136,6 +136,7 @@
         <button onclick="loadChallenge('challenge-06-advanced')">Challenge 6: Advanced</button>
         <button onclick="loadChallenge('challenge-07-obsidian-generator')">Challenge 7: Obsidian Generator</button>
         <button class="clear-console" onclick="clearConsole()">Clear Console</button>
+        <button class="clear-console" onclick="resetSession()">Reset Session</button>
     </div>
     
     <div class="console-container">
@@ -189,8 +190,24 @@
             consoleElement.appendChild(line);
             consoleElement.scrollTop = consoleElement.scrollHeight;
             
+            // Save console content to localStorage
+            saveConsoleState();
+            
             // Also log to real console
             originalConsole[type](message);
+        }
+        
+        function saveConsoleState() {
+            const consoleContent = consoleElement.innerHTML;
+            localStorage.setItem('consoleContent', consoleContent);
+        }
+        
+        function restoreConsoleState() {
+            const savedContent = localStorage.getItem('consoleContent');
+            if (savedContent) {
+                consoleElement.innerHTML = savedContent;
+                consoleElement.scrollTop = consoleElement.scrollHeight;
+            }
         }
         
         // Override console methods
@@ -208,6 +225,50 @@
         
         function clearConsole() {
             consoleElement.innerHTML = '<div class="console-line console-log">Console cleared.</div>';
+            saveConsoleState();
+        }
+        
+        function resetSession() {
+            // Clear all localStorage
+            localStorage.removeItem('currentChallenge');
+            localStorage.removeItem('consoleContent');
+            
+            // Reset UI
+            consoleElement.innerHTML = `
+                <div class="console-line console-log">Welcome to your JavaScript Practice Lab!</div>
+                <div class="console-line console-log">Session reset. Select a challenge to get started.</div>
+            `;
+            
+            // Clear challenge info
+            const challengeContent = document.getElementById('challenge-content');
+            challengeContent.innerHTML = `
+                <div class="challenge-description">
+                    <h4>Getting Started</h4>
+                    <p>Click on any challenge button to load a practice exercise. Each challenge will:</p>
+                    <ul>
+                        <li>Show you what to implement</li>
+                        <li>Provide helpful hints and guidance</li>
+                        <li>Test your solution automatically</li>
+                        <li>Give you feedback on your progress</li>
+                    </ul>
+                    <p><strong>Remember:</strong> The goal is learning, not just completion. Take time to understand each concept!</p>
+                </div>
+            `;
+            
+            // Reset button states
+            document.querySelectorAll('button[onclick*="loadChallenge"]').forEach(btn => {
+                btn.style.backgroundColor = '#007bff';
+                btn.style.fontWeight = 'normal';
+            });
+            
+            // Remove current challenge script
+            const existingScript = document.getElementById('current-challenge-script');
+            if (existingScript) {
+                existingScript.remove();
+            }
+            
+            currentChallenge = null;
+            console.log('🎉 Session reset complete!');
         }
         
         function updateChallengeStatus(challengeId, status) {
@@ -218,38 +279,64 @@
         function loadChallenge(challengeId) {
             currentChallenge = challengeId;
             
+            // Save current challenge to localStorage
+            localStorage.setItem('currentChallenge', challengeId);
+            
             console.log(`🎯 Loading ${challengeId}...`);
             
             // Clear previous challenge
             const challengeContent = document.getElementById('challenge-content');
             challengeContent.innerHTML = '<div class="console-line">Loading...</div>';
             
-            // Load the challenge script
-            const script = document.createElement('script');
-            script.src = `src/${challengeId}.js`;
-            script.onerror = function() {
-                console.error(`❌ Could not load challenge: ${challengeId}.js`);
-                console.log(`💡 Make sure the file exists in the src/ directory`);
-                challengeContent.innerHTML = `
-                    <div class="challenge-description">
-                        <h4>Challenge Not Found</h4>
-                        <p>The file <code>src/${challengeId}.js</code> doesn't exist yet.</p>
-                        <p>This is normal - you'll be creating these files as part of your practice!</p>
-                    </div>
-                `;
-            };
-            script.onload = function() {
-                console.log(`✅ Challenge ${challengeId} loaded successfully!`);
-            };
+            // Load challenge via fetch to avoid page refresh
+            fetch(`src/${challengeId}.js`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Challenge file not found');
+                    return response.text();
+                })
+                .then(scriptContent => {
+                    // Remove previous challenge script if it exists
+                    const existingScript = document.getElementById('current-challenge-script');
+                    if (existingScript) {
+                        existingScript.remove();
+                    }
+                    
+                    // Create and execute the script
+                    const script = document.createElement('script');
+                    script.id = 'current-challenge-script';
+                    script.textContent = scriptContent;
+                    document.head.appendChild(script);
+                    
+                    console.log(`✅ Challenge ${challengeId} loaded successfully!`);
+                    
+                    // Update button states
+                    updateButtonStates(challengeId);
+                })
+                .catch(error => {
+                    console.error(`❌ Could not load challenge: ${challengeId}.js`);
+                    console.log(`💡 Make sure the file exists in the src/ directory`);
+                    challengeContent.innerHTML = `
+                        <div class="challenge-description">
+                            <h4>Challenge Not Found</h4>
+                            <p>The file <code>src/${challengeId}.js</code> doesn't exist yet.</p>
+                            <p>This is normal - you'll be creating these files as part of your practice!</p>
+                        </div>
+                    `;
+                });
+        }
+        
+        function updateButtonStates(currentChallenge) {
+            // Visual feedback for which challenge is active
+            document.querySelectorAll('button[onclick*="loadChallenge"]').forEach(btn => {
+                btn.style.backgroundColor = '#007bff';
+                btn.style.fontWeight = 'normal';
+            });
             
-            // Remove previous challenge script if it exists
-            const existingScript = document.getElementById('current-challenge-script');
-            if (existingScript) {
-                existingScript.remove();
+            const activeButton = document.querySelector(`button[onclick="loadChallenge('${currentChallenge}')"]`);
+            if (activeButton) {
+                activeButton.style.backgroundColor = '#28a745';
+                activeButton.style.fontWeight = 'bold';
             }
-            
-            script.id = 'current-challenge-script';
-            document.head.appendChild(script);
         }
         
         // Utility function for challenges to update their info panel
@@ -289,7 +376,19 @@
             }
         };
         
-        console.log('🎉 Practice Lab initialized! Select a challenge to begin.');
+        // Auto-load last challenge and console state on page load
+        window.addEventListener('load', function() {
+            // Restore console first
+            restoreConsoleState();
+            
+            const lastChallenge = localStorage.getItem('currentChallenge');
+            if (lastChallenge) {
+                console.log(`🔄 Restoring last challenge: ${lastChallenge}`);
+                loadChallenge(lastChallenge);
+            } else {
+                console.log('🎉 Practice Lab initialized! Select a challenge to begin.');
+            }
+        });
     </script>
 </body>
 </html>
