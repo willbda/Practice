@@ -2,6 +2,8 @@
 
 A hands-on learning environment designed to build practical JavaScript skills through real-world projects.
 
+Written with Claude Sonnet 4
+
 ## Quick Start
 
 1. Open `index.html` in your browser
@@ -12,6 +14,7 @@ A hands-on learning environment designed to build practical JavaScript skills th
 ## Learning Path
 
 ### Foundation Challenges (1-5)
+
 These build core JavaScript competencies:
 
 - **Challenge 1: Variables** - Data types, declarations, operations
@@ -21,6 +24,7 @@ These build core JavaScript competencies:
 - **Challenge 5: Loops** - All loop types, when to use each
 
 ### Applied Challenges (6-7)
+
 These tackle real-world problems:
 
 - **Challenge 6: Data Processing** - CSV parsing, templates, validation

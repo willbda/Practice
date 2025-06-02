@@ -2,17 +2,19 @@
 // 🎯 Goal: Master variable declarations, data types, and basic operations
 
 updateChallengeInfo(
-    "Challenge 1: Variables & Data Types - REVIEWED",
-    "David's excellent work with instructor feedback and suggestions for improvement.",
-    [
-        "Excellent foundation work with creative exploration",
-        "Strong documentation and teaching style",
-        "Good experimentation with concepts",
-        "Areas identified for further growth"
-    ]
+  "Challenge 1: Variables & Data Types - REVIEWED",
+  "David's excellent work with instructor feedback and suggestions for improvement.",
+  [
+    "Excellent foundation work with creative exploration",
+    "Strong documentation and teaching style",
+    "Good experimentation with concepts",
+    "Areas identified for further growth",
+  ]
 );
 
-console.log("📚 Starting Challenge 1: Variables and Data Types - INSTRUCTOR REVIEW");
+console.log(
+  "📚 Starting Challenge 1: Variables and Data Types - INSTRUCTOR REVIEW"
+);
 
 // TODO 1: Variable Declarations ✅ EXCELLENT
 // Declare a variable called 'userName' using let and assign it your name
@@ -39,10 +41,10 @@ let isStudent = false;
 // However, let's talk about when this is helpful vs. when it can cause problems...
 
 let myString = "hello friend!",
-    myNumber = 23,
-    myBoolean = true,
-    myUndefined,        // INSTRUCTOR: Great! You understand undefined vs null
-    myNull = null;
+  myNumber = 23,
+  myBoolean = true,
+  myUndefined, // INSTRUCTOR: Great! You understand undefined vs null
+  myNull = null;
 
 // INSTRUCTOR SUGGESTIONS:
 console.log("=== Data Type Exploration ===");
@@ -74,17 +76,17 @@ const age = currentYear - birthYear;
 
 // INSTRUCTOR: Switch statement here is interesting! Let's discuss...
 switch (isStudent) {
-    case true:
-        console.log(
-            `Greetings, ${userName}! Since you were born in ${birthYear}, that makes you ${age}. Since you're a student, you must be very busy with your studies!`
-        );
-        break;
+  case true:
+    console.log(
+      `Greetings, ${userName}! Since you were born in ${birthYear}, that makes you ${age}. Since you're a student, you must be very busy with your studies!`
+    );
+    break;
 
-    default:
-        console.log(
-            `Greetings, ${userName}! Since you were born in ${birthYear}, that makes you ${age}. Since you're not a student, what do you do all day?`
-        );
-        break;
+  default:
+    console.log(
+      `Greetings, ${userName}! Since you were born in ${birthYear}, that makes you ${age}. Since you're not a student, what do you do all day?`
+    );
+    break;
 }
 
 // INSTRUCTOR ANALYSIS: Switch vs If/Else
@@ -101,7 +103,7 @@ switch (isStudent) {
 // - Multiple discrete values: switch(dayOfWeek) { case 'monday': ... }
 // - Complex logic trees: switch(userRole) { case 'admin': case 'moderator': ... }
 //
-// FUTURE CONNECTION: You'll love switch statements in Challenge 6 when we 
+// FUTURE CONNECTION: You'll love switch statements in Challenge 6 when we
 // determine document types from CSV data!
 
 // INSTRUCTOR SUGGESTION: Template Literal Organization
@@ -119,44 +121,44 @@ const studentMessage = `
 // - Modulo operator (%)
 // - Increment and decrement operators
 
-// INSTRUCTOR: Your documentation style here is exceptional! 
+// INSTRUCTOR: Your documentation style here is exceptional!
 // This is exactly how good developers think and communicate.
 
 console.log("\n let's do some math");
 
 let n = 5,
-    m = 27;
+  m = 27;
 
 // INSTRUCTOR: Beautiful explanatory style! A few enhancements:
 
 console.log(`First, there's addition. Easy to do:\n\t${n} + ${m} = ${n + m}`);
 console.log(`\nWhereas subtraction goes in reverse:\n\t${m} - ${n} = ${m - n}`);
 
-// INSTRUCTOR NOTE: Your modulo explanation is perfect! This operator trips up 
+// INSTRUCTOR NOTE: Your modulo explanation is perfect! This operator trips up
 // many new programmers, but you explained it clearly.
 console.log(
-    `\nModulo is up next; this one is funny because we don't talk about it much, but it's intuitive and useful. It's just the remainder of division;\n\tthe remainder of ${m} % ${n} is of course: ${
-        m % n
-    }, which is to say ${
-        m % n
-    } is what's left over when you divide ${n} evenly into ${m}`
+  `\nModulo is up next; this one is funny because we don't talk about it much, but it's intuitive and useful. It's just the remainder of division;\n\tthe remainder of ${m} % ${n} is of course: ${
+    m % n
+  }, which is to say ${
+    m % n
+  } is what's left over when you divide ${n} evenly into ${m}`
 );
 
 // INSTRUCTOR DEEP DIVE: Modulo's Real-World Power
 // You'll use % constantly for:
 // - Checking if numbers are even: if (num % 2 === 0)
-// - Cycling through arrays: array[index % array.length]
+// - Cycling through arrays: array[index % array.length] !!
 // - Time calculations: if (hour % 12 === 0) // it's noon or midnight
 
 console.log(
-    `\nAnother way to think about addition and subtraction is with increment and decriment. Take a look at this!\n\n`
+  `\nAnother way to think about addition and subtraction is with increment and decriment. Take a look at this!\n\n`
 );
 
-// INSTRUCTOR: This loop demonstration is BRILLIANT teaching! 
+// INSTRUCTOR: This loop demonstration is BRILLIANT teaching!
 // You're connecting multiple concepts (loops, arithmetic, string interpolation)
 for (let i = 0; i < n + 1; i++) {
-    let w = m - i;
-    console.log(`Step:${i + 1}:\t${m}-${i}=${w}\t\t and\t\t ${w}+${i}=${m}`);
+  let w = m - i;
+  console.log(`Step:${i + 1}:\t${m}-${i}=${w}\t\t and\t\t ${w}+${i}=${m}`);
 }
 
 // INSTRUCTOR SUGGESTIONS for your loop:
@@ -167,9 +169,11 @@ for (let i = 0; i < n + 1; i++) {
 // INSTRUCTOR ENHANCED VERSION (study the differences):
 console.log("\n=== Enhanced Loop Demonstration ===");
 for (let step = 0; step <= n; step++) {
-    const difference = m - step;
-    const stepNumber = step + 1;
-    console.log(`Step ${stepNumber}: ${m} - ${step} = ${difference} \t|\t ${difference} + ${step} = ${m}`);
+  const difference = m - step;
+  const stepNumber = step + 1;
+  console.log(
+    `Step ${stepNumber}: ${m} - ${step} = ${difference} \t|\t ${difference} + ${step} = ${m}`
+  );
 }
 
 // TODO 5: Type Conversion 🤔 GREAT QUESTION!
@@ -186,21 +190,41 @@ console.log("implicitNumberConsersion is a", typeof implicitNumberConversion);
 
 // INSTRUCTOR NOTE: Great example! But there are many ways to convert:
 console.log("\n=== Number Conversion Methods ===");
-console.log("Original string:", stringWithImpliedNum, typeof stringWithImpliedNum);
-console.log("Using arithmetic (*1):", 1 * stringWithImpliedNum, typeof (1 * stringWithImpliedNum));
-console.log("Using Number():", Number(stringWithImpliedNum), typeof Number(stringWithImpliedNum));
-console.log("Using parseInt():", parseInt(stringWithImpliedNum), typeof parseInt(stringWithImpliedNum));
-console.log("Using + operator:", +stringWithImpliedNum, typeof +stringWithImpliedNum);
+console.log(
+  "Original string:",
+  stringWithImpliedNum,
+  typeof stringWithImpliedNum
+);
+console.log(
+  "Using arithmetic (*1):",
+  1 * stringWithImpliedNum,
+  typeof (1 * stringWithImpliedNum)
+);
+console.log(
+  "Using Number():",
+  Number(stringWithImpliedNum),
+  typeof Number(stringWithImpliedNum)
+);
+console.log(
+  "Using parseInt():",
+  parseInt(stringWithImpliedNum),
+  typeof parseInt(stringWithImpliedNum)
+);
+console.log(
+  "Using + operator:",
+  +stringWithImpliedNum,
+  typeof +stringWithImpliedNum
+);
 
 // INSTRUCTOR WARNING: parseInt() has surprises!
-console.log("parseInt('33.7'):", parseInt('33.7')); // Drops decimal!
-console.log("parseInt('33abc'):", parseInt('33abc')); // Stops at first non-digit!
+console.log("parseInt('33.7'):", parseInt("33.7")); // Drops decimal!
+console.log("parseInt('33abc'):", parseInt("33abc")); // Stops at first non-digit!
 
 let definitelyANumber = 29;
 let explicitNumberConversiontoString = String(definitelyANumber);
 console.log(
-    `explicitNumberConversiontoString (${explicitNumberConversiontoString}) is a`,
-    typeof explicitNumberConversiontoString
+  `explicitNumberConversiontoString (${explicitNumberConversiontoString}) is a`,
+  typeof explicitNumberConversiontoString
 );
 
 // INSTRUCTOR: Perfect explicit conversion! Other methods:
@@ -214,7 +238,7 @@ console.log("Using concatenation:", definitelyANumber + "");
 // This is JavaScript's most confusing concept. Let's demystify it:
 
 if (definitelyANumber !== true) {
-    console.log(`Wait, what?? ${definitelyANumber} is not truthy?`);
+  console.log(`Wait, what?? ${definitelyANumber} is not truthy?`);
 }
 
 // INSTRUCTOR EXPLANATION: You discovered the difference between:
@@ -222,14 +246,14 @@ if (definitelyANumber !== true) {
 // 2. EQUALITY: Is this value literally the same as true?
 
 console.log("\n=== TRUTHINESS vs EQUALITY MASTERCLASS ===");
-console.log("29 is truthy:", !!29);                    // true - 29 acts like true
-console.log("29 == true:", 29 == true);                // false - weird coercion!
-console.log("29 === true:", 29 === true);              // false - different types
-console.log("Boolean(29):", Boolean(29));              // true - explicit conversion
+console.log("29 is truthy:", !!29); // true - 29 acts like true
+console.log("29 == true:", 29 == true); // false - weird coercion!
+console.log("29 === true:", 29 === true); // false - different types
+console.log("Boolean(29):", Boolean(29)); // true - explicit conversion
 
 // INSTRUCTOR: Why 29 == true is false (JavaScript's weirdest rule):
 // When using ==, JavaScript converts true to 1, then compares 29 == 1
-console.log("true gets converted to:", Number(true));   // 1
+console.log("true gets converted to:", Number(true)); // 1
 console.log("So 29 == true becomes 29 == 1:", 29 == 1); // false!
 
 // INSTRUCTOR: Truthy vs Falsy values to memorize:
@@ -238,7 +262,7 @@ console.log("false:", !!false);
 console.log("0:", !!0);
 console.log("-0:", !!-0);
 console.log("0n (BigInt):", !!0n);
-console.log("'' (empty string):", !!'');
+console.log("'' (empty string):", !!"");
 console.log("null:", !!null);
 console.log("undefined:", !!undefined);
 console.log("NaN:", !!NaN);
@@ -246,15 +270,16 @@ console.log("NaN:", !!NaN);
 // INSTRUCTOR: Real-world usage patterns:
 console.log("\n=== How Professionals Use Truthiness ===");
 const userInput = "David";
-if (userInput) {  // Much better than if (userInput === true)
-    console.log("User provided input:", userInput);
+if (userInput) {
+  // Much better than if (userInput === true)
+  console.log("User provided input:", userInput);
 }
 
 const score = 0;
 if (score) {
-    console.log("User has a score");
+  console.log("User has a score");
 } else {
-    console.log("Score is 0 or not set"); // This runs!
+  console.log("Score is 0 or not set"); // This runs!
 }
 
 // INSTRUCTOR BEST PRACTICES going forward:
@@ -265,35 +290,35 @@ if (score) {
 
 // 🧪 Test your solutions ✅ PERFECT
 function testChallenge1() {
-    console.log("🔍 Testing your Challenge 1 solutions...");
+  console.log("🔍 Testing your Challenge 1 solutions...");
 
-    // Test if variables are declared
-    try {
-        if (typeof userName === "undefined") {
-            return "userName variable not declared";
-        }
-        if (typeof birthYear === "undefined") {
-            return "birthYear variable not declared";
-        }
-        if (typeof isStudent === "undefined") {
-            return "isStudent variable not declared";
-        }
-
-        // Test data types
-        if (typeof userName !== "string") {
-            return "userName should be a string";
-        }
-        if (typeof birthYear !== "number") {
-            return "birthYear should be a number";
-        }
-        if (typeof isStudent !== "boolean") {
-            return "isStudent should be a boolean";
-        }
-
-        return true;
-    } catch (error) {
-        return `Error: ${error.message}`;
+  // Test if variables are declared
+  try {
+    if (typeof userName === "undefined") {
+      return "userName variable not declared";
     }
+    if (typeof birthYear === "undefined") {
+      return "birthYear variable not declared";
+    }
+    if (typeof isStudent === "undefined") {
+      return "isStudent variable not declared";
+    }
+
+    // Test data types
+    if (typeof userName !== "string") {
+      return "userName should be a string";
+    }
+    if (typeof birthYear !== "number") {
+      return "birthYear should be a number";
+    }
+    if (typeof isStudent !== "boolean") {
+      return "isStudent should be a boolean";
+    }
+
+    return true;
+  } catch (error) {
+    return `Error: ${error.message}`;
+  }
 }
 
 // INSTRUCTOR: You uncommented the test - shows confidence! Good instinct.
@@ -317,7 +342,9 @@ console.log("  • When to use different control structures");
 console.log("  • Code organization patterns");
 
 console.log("\n🚀 WHAT'S NEXT:");
-console.log("  • Challenge 2: Functions will let you package your teaching style");
+console.log(
+  "  • Challenge 2: Functions will let you package your teaching style"
+);
 console.log("  • You're ready for more complex concepts");
 console.log("  • Keep that experimental mindset!");
 console.log("  • Your CSV project will benefit from this solid foundation");
